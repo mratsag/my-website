@@ -22,7 +22,7 @@ import {
   ExternalLink,
   Save,
   Globe,
-  Rat
+  PenTool as Draft
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -204,7 +204,7 @@ function BlogPage() {
       </span>
     ) : (
       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-        <Rat className="w-3 h-3 mr-1" />
+        <FileText className="w-3 h-3 mr-1" />
         Taslak
       </span>
     )
