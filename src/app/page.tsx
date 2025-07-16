@@ -1,44 +1,31 @@
-// app/layout.tsx
-import { AuthProvider } from '@/contexts/AuthContext'
-import { Inter } from 'next/font/google'
-import './globals.css'
+// app/page.tsx
+import Link from 'next/link'
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: 'Portföy | Modern Web Developer',
-  description: 'Full-stack web developer portföy sitesi. Projelerim, deneyimlerim ve blog yazılarım.',
-  keywords: ['web developer', 'full-stack', 'react', 'nextjs', 'typescript', 'portfolio'],
-  authors: [{ name: 'Your Name' }],
-  openGraph: {
-    title: 'Portföy | Modern Web Developer',
-    description: 'Full-stack web developer portföy sitesi',
-    type: 'website',
-    locale: 'tr_TR',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Portföy | Modern Web Developer',
-    description: 'Full-stack web developer portföy sitesi',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function HomePage() {
   return (
-    <html lang="tr" suppressHydrationWarning>
-      <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
-    </html>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">
+          Portföy Sitesi
+        </h1>
+        <p className="text-gray-600 mb-8">
+          Modern web developer portföy sitesi
+        </p>
+        <div className="space-x-4">
+          <Link
+            href="/admin/login"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+          >
+            Admin Panel
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+          >
+            Blog
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }

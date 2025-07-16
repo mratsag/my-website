@@ -3,7 +3,7 @@
 
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { InputWithIcon } from '@/components/ui/InputWithIcon'
 import { Alert } from '@/components/ui/Alert'
 import { formatErrorMessage } from '@/lib/utils'
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
@@ -44,10 +44,10 @@ export default function LoginPage() {
   const isFormValid = email.length > 0 && password.length > 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md animate-fadeIn">
         <div className="flex justify-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg hover-lift">
             <Lock className="w-8 h-8 text-white" />
           </div>
         </div>
@@ -59,51 +59,45 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow-xl rounded-xl sm:px-10 border border-gray-200">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md animate-slideIn">
+        <div className="bg-white/80 backdrop-blur-sm py-8 px-4 shadow-2xl rounded-xl sm:px-10 border border-white/20">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="relative">
-              <Input
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@example.com"
-                required
-                disabled={loading}
-                className="pl-10"
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none mt-6">
-                <Mail className="h-5 w-5 text-gray-400" />
-              </div>
-            </div>
+            <InputWithIcon
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@example.com"
+              required
+              disabled={loading}
+              leftIcon={Mail}
+              className="hover-glow"
+            />
 
-            <div className="relative">
-              <Input
-                label="Şifre"
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                disabled={loading}
-                className="pl-10 pr-10"
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none mt-6">
-                <Lock className="h-5 w-5 text-gray-400" />
-              </div>
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center mt-6 hover:text-gray-600 transition-colors"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <Eye className="h-5 w-5 text-gray-400" />
-                )}
-              </button>
-            </div>
+            <InputWithIcon
+              label="Şifre"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              disabled={loading}
+              leftIcon={Lock}
+              className="hover-glow"
+              rightIcon={
+                <button
+                  type="button"
+                  className="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-md hover:bg-gray-100"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              }
+            />
 
             {error && (
               <Alert type="error" title="Giriş Hatası">
@@ -113,7 +107,7 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
               disabled={!isFormValid || loading}
               loading={loading}
             >
@@ -126,17 +120,6 @@ export default function LoginPage() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Test hesabı
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-4 text-center text-sm text-gray-600 bg-gray-50 rounded-lg p-4">
-              <p className="font-medium mb-2">Deneme için kullanabilirsiniz:</p>
-              <p className="text-gray-700">Email: admin@example.com</p>
-              <p className="text-gray-700">Şifre: admin123</p>
             </div>
           </div>
         </div>
