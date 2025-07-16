@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Kategorilere göre grupla
-    const grouped = data.reduce<Record<string, typeof data[number][]>>((acc, skill) => {
+    const grouped = data.reduce<Record<string, typeof data[0][]>>((acc, skill) => {
       const category = skill.category
       if (!acc[category]) {
         acc[category] = []
@@ -62,59 +62,6 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ data, message: 'Yetenek başarıyla oluşturuldu' })
-  } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
-}
-
-// Individual Skill API - app/api/skills/[id]/route.ts
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const body: SkillForm = await request.json()
-
-    // Proficiency seviyesi kontrolü
-    if (body.proficiency < 1 || body.proficiency > 5) {
-      return NextResponse.json({ error: 'Proficiency seviyesi 1-5 arasında olmalıdır' }, { status: 400 })
-    }
-
-    const { data, error } = await supabase
-      .from('skills')
-      .update(body)
-      .eq('id', params.id)
-      .select()
-      .single()
-
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return NextResponse.json({ error: 'Yetenek bulunamadı' }, { status: 404 })
-      }
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    return NextResponse.json({ data, message: 'Yetenek başarıyla güncellendi' })
-  } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { error } = await supabase
-      .from('skills')
-      .delete()
-      .eq('id', params.id)
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    return NextResponse.json({ message: 'Yetenek başarıyla silindi' })
   } catch (error) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
